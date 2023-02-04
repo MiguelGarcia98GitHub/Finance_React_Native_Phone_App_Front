@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Stocks React Native App - Miguel Garcia</Text>
+      <Text>Finance React Native App - Miguel Garcia</Text>
       <StatusBar style="auto" />
     </View>
   );
