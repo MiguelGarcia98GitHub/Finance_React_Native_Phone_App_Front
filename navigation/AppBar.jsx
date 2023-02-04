@@ -10,7 +10,7 @@ const AppBarItem = ({ children, to }) => {
     <Link
       to={to}
       component={Pressable}
-      style={{ backgroundColor: "grey", padding: 10 }}
+      style={{ backgroundColor: "grey", margin: 10, padding: 8 }}
     >
       <Text>{children}</Text>
     </Link>
@@ -22,12 +22,12 @@ export default function AppBar() {
     <View
       style={{
         backgroundColor: "orange",
-        padding: 20,
+        paddingVertical: 20,
         flexDirection: "row",
       }}
     >
-      <AppBarItem to="/news_start">News_Start - </AppBarItem>
-      <AppBarItem to="/stocks_start">Home</AppBarItem>
+      <AppBarItem to="/news_start">News_Start</AppBarItem>
+      <AppBarItem to="/stocks_start">Stocks_Start</AppBarItem>
     </View>
   );
 }

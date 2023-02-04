@@ -1,15 +1,17 @@
 import { FlatList, ScrollView } from "react-native";
-import { useStore } from "./../store/store";
 import NewsListItem from "./NewsListItem";
+import { useNavigation } from "@react-navigation/native";
+import { useZustand } from "./../store/store";
 
 export default function NewsList() {
-  const { randomNewsData } = useStore();
+  const { randomNewsData } = useZustand();
+  const navigation = useNavigation();
+  console.log(navigation);
 
   return (
     <FlatList
       data={randomNewsData}
-      renderItem={NewsListItem}
-      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => <NewsListItem item={item} />}
     ></FlatList>
   );
 }

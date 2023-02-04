@@ -1,4 +1,5 @@
 import { Text, View } from "react-native";
+import { useZustand } from "zustand";
 
 export default function Screen_StocksStart() {
   return (
@@ -8,7 +9,6 @@ export default function Screen_StocksStart() {
         height: "100%",
         padding: 10,
         backgroundColor: "grey",
-        paddingTop: 200,
       }}
     >
       <Text>Screen Stocks Start</Text>

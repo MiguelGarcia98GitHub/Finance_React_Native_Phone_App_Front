@@ -2,9 +2,9 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { fetchError } from "../errors/errorMessages";
 
-export const useStore = create(
+export const useZustand = create(
   devtools((set, get) => ({
-    randomNewsData: {},
+    randomNewsData: [],
     fetchRandomNewsData: async () => {
       const tickersArray = [
         "AAPL",
@@ -41,6 +41,13 @@ export const useStore = create(
             randomNewsData: fetchError,
           }));
         });
+    },
+    selectedNews: {},
+    changeSelectedNews: (newsID) => {
+      set((state) => ({
+        ...state,
+        selectedNews: get().randomNewsData.find((item) => item.id === newsID),
+      }));
     },
   }))
 );
