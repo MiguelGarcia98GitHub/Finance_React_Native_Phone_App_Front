@@ -12,6 +12,6 @@ export default function NewsList() {
     <FlatList
       data={randomNewsData}
       renderItem={({ item }) => <NewsListItem item={item} />}
-    ></FlatList>
+    />
   );
 }
