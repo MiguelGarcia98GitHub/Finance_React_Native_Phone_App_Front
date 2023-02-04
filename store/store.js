@@ -25,15 +25,16 @@ export const useStore = create(
       const randomTickerName = tickersArray[randomTickerIndex];
 
       fetch(
-        `https://api.polygon.io/v2/reference/news?ticker=${randomTickerName}&limit=40&apiKey=cpLItb5XLdMpk_pFumxU0ZsDap9ndidz`
+        `https://api.polygon.io/v2/reference/news?ticker=${randomTickerName}&limit=10&apiKey=cpLItb5XLdMpk_pFumxU0ZsDap9ndidz`
       )
         .then((response) => response.json())
-        .then((data) =>
+        .then((data) => {
+          console.log(data);
           set((state) => ({
             ...state,
             randomNewsData: data.results,
-          }))
-        )
+          }));
+        })
         .catch((_err) => {
           set((state) => ({
             ...state,

@@ -1,9 +1,11 @@
 import { Text, View } from "react-native";
 
-export default function NewsListItemDetails() {
+export default function NewsListItemDetails({ item }) {
+  console.log(item);
+
   return (
     <View>
-      <Text></Text>
+      <Text>NewsListItemDetails</Text>
       <Text></Text>
     </View>
   );
