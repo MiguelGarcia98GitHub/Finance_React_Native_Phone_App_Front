@@ -8,7 +8,12 @@ export default function NewsListItem({ item }) {
 
   return (
     <Pressable
-      style={{ backgroundColor: "grey", width: 340, height: 300 }}
+      style={{
+        backgroundColor: "aliceblue",
+        width: 340,
+        height: 300,
+        marginTop: 10,
+      }}
       to="/news_details"
       onPress={() => {
         changeSelectedNews(item.id);
@@ -33,7 +38,7 @@ export default function NewsListItem({ item }) {
           </View>
           <View style={{ flexDirection: "row" }}>
             {item.tickers.map((tickerName) => (
-              <View key={tickerName}>
+              <View key={Math.random()}>
                 <Text> {tickerName} </Text>
               </View>
             ))}

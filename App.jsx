@@ -9,16 +9,11 @@ import Screen_StocksStart from "./screens/Screen_StocksStart";
 import Screen_NewsDetails from "./screens/Screen_NewsDetails";
 import { useZustand } from "./store/store";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import Screen_StockDetails from "./screens/Screen_StockDetails";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const { fetchRandomNewsData } = useZustand();
-
-  useEffect(() => {
-    fetchRandomNewsData();
-  }, []);
-
   const Tab = createMaterialTopTabNavigator();
 
   function MyTabs() {
@@ -36,10 +31,15 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Tabs">
-        <Stack.Screen name="Tabs" component={MyTabs} />
+        <Stack.Screen
+          name="Tabs"
+          component={MyTabs}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="News_Start" component={Screen_NewsStart} />
         <Stack.Screen name="News_Details" component={Screen_NewsDetails} />
         <Stack.Screen name="Stocks_Start" component={Screen_StocksStart} />
+        <Stack.Screen name="Stock_Details" component={Screen_StockDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );
