@@ -14,7 +14,7 @@ export default function Screen_DividendsSearch() {
         width: "100%",
         height: "100%",
         alignItems: "center",
-        backgroundColor: "red",
+        backgroundColor: "lightgreen",
       }}
     >
       <View

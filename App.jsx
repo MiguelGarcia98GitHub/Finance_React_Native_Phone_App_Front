@@ -11,6 +11,7 @@ import { useZustand } from "./store/store";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Screen_StockDetails from "./screens/Screen_StockDetails";
 import Screen_DividendsSearch from "./screens/Screen_DividendsSearch";
+import Screen_ForexConverter from "./screens/Screen_ForexConverter";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,7 @@ export default function App() {
           name="Dividends_Search"
           component={Screen_DividendsSearch}
         />
+        <Tab.Screen name="Forex_Converter" component={Screen_ForexConverter} />
       </Tab.Navigator>
     );
   }

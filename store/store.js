@@ -171,5 +171,24 @@ export const useZustand = create(
           }));
         });
     },
+    selectedForexData: {},
+    fetchForexData: async (forex1stCurrency, forex2ndCurrency) => {
+      fetch(
+        `https://api.polygon.io/v2/aggs/ticker/C:${forex1stCurrency}${forex2ndCurrency}/prev?adjusted=true&apiKey=cpLItb5XLdMpk_pFumxU0ZsDap9ndidz`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("fetched Forex Data:");
+          console.log(data);
+          set((state) => ({
+            ...state,
+            selectedForexData: data.results[0],
+          }));
+        })
+        .catch((_err) => ({
+          ...state,
+          selectedForexData: fetchError,
+        }));
+    },
   }))
 );
