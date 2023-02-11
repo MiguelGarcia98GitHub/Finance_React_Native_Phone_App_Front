@@ -10,6 +10,7 @@ import Screen_NewsDetails from "./screens/Screen_NewsDetails";
 import { useZustand } from "./store/store";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Screen_StockDetails from "./screens/Screen_StockDetails";
+import Screen_DividendsSearch from "./screens/Screen_DividendsSearch";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,10 @@ export default function App() {
       >
         <Tab.Screen name="News_Start" component={Screen_NewsStart} />
         <Tab.Screen name="Stocks_Start" component={Screen_StocksStart} />
+        <Tab.Screen
+          name="Dividends_Search"
+          component={Screen_DividendsSearch}
+        />
       </Tab.Navigator>
     );
   }
@@ -40,6 +45,10 @@ export default function App() {
         <Stack.Screen name="News_Details" component={Screen_NewsDetails} />
         <Stack.Screen name="Stocks_Start" component={Screen_StocksStart} />
         <Stack.Screen name="Stock_Details" component={Screen_StockDetails} />
+        <Stack.Screen
+          name="Dividends_Search"
+          component={Screen_DividendsSearch}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
