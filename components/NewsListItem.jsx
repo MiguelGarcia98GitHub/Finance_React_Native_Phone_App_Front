@@ -103,6 +103,7 @@ export default function NewsListItem({ item }) {
           {item.tickers.slice(0, 5).map((tickerName, index) => (
             <View key={Math.random()}>
               <Text
+                numberOfLines={12}
                 style={{
                   color: "white",
                   fontSize: 13,

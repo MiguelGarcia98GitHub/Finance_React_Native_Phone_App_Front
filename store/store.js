@@ -26,7 +26,7 @@ export const useZustand = create(
 
       const randomTickerName = tickersArray[randomTickerIndex];
 
-      fetch(
+      const data = await fetch(
         `https://api.polygon.io/v2/reference/news?ticker=${randomTickerName}&limit=20&apiKey=cpLItb5XLdMpk_pFumxU0ZsDap9ndidz`
       )
         .then((response) => response.json())
@@ -36,6 +36,7 @@ export const useZustand = create(
             ...state,
             randomNewsData: data.results,
           }));
+          return data;
         })
         .catch((_err) => {
           set((state) => ({
@@ -43,6 +44,8 @@ export const useZustand = create(
             randomNewsData: fetchError,
           }));
         });
+
+      return data;
     },
     selectedNews: {},
     changeSelectedNews: (newsID) => {
@@ -67,12 +70,13 @@ export const useZustand = create(
 
       currentDate = currentDate.toISOString().split("T")[0];
       console.log(currentDate);
-      fetch(
+      const data = await fetch(
         `https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/${currentDate}?adjusted=true&apiKey=cpLItb5XLdMpk_pFumxU0ZsDap9ndidz`
       )
         .then((response) => response.json())
         .then((data) => {
           console.log("data of all stocks data:");
+
           set((state) => ({
             // We will place some relevant stock names first (order randomized), then the rest of stocks in the list (also randomized)
             ...state,
@@ -120,6 +124,7 @@ export const useZustand = create(
                 ),
             ],
           }));
+          return data;
         })
         .catch((_err) => {
           set((state) => ({
@@ -127,6 +132,8 @@ export const useZustand = create(
             allStocksData: fetchError,
           }));
         });
+
+      return data;
     },
     selectedStockData: {},
     fetchSelectedStockData: async (stockTicker) => {
@@ -141,6 +148,7 @@ export const useZustand = create(
             ...state,
             selectedStockData: data.results,
           }));
+          return data;
         })
         .catch((_err) => {
           set((state) => ({

@@ -6,10 +6,6 @@ import StockListItem from "./StockListItem";
 export default function StocksList() {
   const { fetchAllStocksData, allStocksData } = useZustand();
 
-  useEffect(() => {
-    fetchAllStocksData();
-  }, []);
-
   return (
     <FlatList
       data={allStocksData}

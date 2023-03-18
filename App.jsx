@@ -17,6 +17,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { TextSize } from "victory-native";
 import NewsList from "./components/NewsList";
 import NewsListItemDetails from "./components/NewsListItemDetails";
+import LoadingScreen from "./components/LoadingScreen";
 
 export default function App() {
   const Tab = createBottomTabNavigator();
@@ -26,8 +27,12 @@ export default function App() {
 
   function NewsStack() {
     return (
-      <Stack.Navigator screenOptions={{}}>
-        <Stack.Screen name="Recent News" component={NewsList} />
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="NewsList" component={NewsList} />
         <Stack.Screen name="News Detail" component={NewsListItemDetails} />
       </Stack.Navigator>
     );
@@ -35,96 +40,104 @@ export default function App() {
 
   function MyTabs() {
     return (
-      <NavigationContainer>
-        <Tab.Navigator initialRouteName="News_Start">
-          <Tab.Screen
-            name="Stock Market News"
-            component={NewsStack}
-            options={{
-              tabBarLabel: "News",
-              tabBarIcon: ({ color, size, focused }) => {
-                return (
-                  <MaterialCommunityIcons
-                    name="newspaper-variant-multiple-outline"
-                    color={"grey"}
-                    size={focused ? 28 : 24}
-                  />
-                );
-              },
-              tabBarActiveBackgroundColor: "#E2DFD2",
-              tabBarActiveTintColor: "red",
-              headerTitleStyle: {
-                fontSize: 25,
-                fontWeight: "bold",
-              },
-            }}
-          />
+      <Tab.Navigator
+        initialRouteName="News"
+        screenOptions={{
+          unmountOnBlur: true,
 
-          <Tab.Screen
-            name="Stocks"
-            component={Screen_StocksStart}
-            options={{
-              tabBarIcon: ({ color, size, focused }) => {
-                return (
-                  <MaterialCommunityIcons
-                    name="cash"
-                    color={"green"}
-                    size={focused ? 28 : 24}
-                  />
-                );
-              },
-              tabBarActiveBackgroundColor: "#E2DFD2",
-              tabBarActiveTintColor: "red",
-              headerTitleStyle: {
-                fontSize: 25,
-                fontWeight: "bold",
-              },
-            }}
-          />
-          <Tab.Screen
-            name="Dividends"
-            component={Screen_DividendsSearch}
-            options={{
-              tabBarIcon: ({ color, size, focused }) => {
-                return (
-                  <MaterialCommunityIcons
-                    name="chart-bar"
-                    color={"dodgerblue"}
-                    size={focused ? 28 : 24}
-                  />
-                );
-              },
-            }}
-          />
-          <Tab.Screen
-            name="Currency Converter"
-            component={Screen_ForexConverter}
-            options={{
-              tabBarIcon: ({ color, size, focused }) => {
-                return (
-                  <MaterialCommunityIcons
-                    name="currency-usd"
-                    color={"green"}
-                    size={focused ? 28 : 24}
-                  />
-                );
-              },
-            }}
-          />
-        </Tab.Navigator>
-      </NavigationContainer>
+          tabBarActiveBackgroundColor: "#E2DFD2",
+          tabBarActiveTintColor: "black",
+          headerTitleStyle: {
+            fontSize: 25,
+            fontWeight: "bold",
+          },
+        }}
+      >
+        <Tab.Screen
+          name="News"
+          component={NewsStack}
+          options={{
+            tabBarLabel: "News",
+            tabBarIcon: ({ color, size, focused }) => {
+              return (
+                <MaterialCommunityIcons
+                  name="newspaper-variant-multiple-outline"
+                  color={"grey"}
+                  size={focused ? 28 : 24}
+                />
+              );
+            },
+          }}
+        />
+
+        <Tab.Screen
+          name="Stocks"
+          component={Screen_StocksStart}
+          options={{
+            tabBarIcon: ({ color, size, focused }) => {
+              return (
+                <MaterialCommunityIcons
+                  name="cash"
+                  color={"green"}
+                  size={focused ? 28 : 24}
+                />
+              );
+            },
+          }}
+        />
+        <Tab.Screen
+          name="Dividends"
+          component={Screen_DividendsSearch}
+          options={{
+            tabBarIcon: ({ color, size, focused }) => {
+              return (
+                <MaterialCommunityIcons
+                  name="chart-bar"
+                  color={"dodgerblue"}
+                  size={focused ? 28 : 24}
+                />
+              );
+            },
+          }}
+        />
+        <Tab.Screen
+          name="Currency Converter"
+          component={Screen_ForexConverter}
+          options={{
+            tabBarIcon: ({ color, size, focused }) => {
+              return (
+                <MaterialCommunityIcons
+                  name="currency-usd"
+                  color={"green"}
+                  size={focused ? 28 : 24}
+                />
+              );
+            },
+          }}
+        />
+      </Tab.Navigator>
     );
   }
 
   return (
-    <View
-      style={{
-        width: deviceWidth,
-        height: deviceHeight,
-      }}
-    >
-      <StatusBar />
-      <MyTabs />
-    </View>
+    <NavigationContainer>
+      <StatusBar style="auto" />
+      <Stack.Navigator>
+        <Stack.Screen
+          name="LoadingScreen"
+          component={LoadingScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Tabs"
+          component={MyTabs}
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }

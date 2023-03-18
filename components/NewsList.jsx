@@ -8,10 +8,6 @@ export default function NewsList() {
   const deviceWidth = Dimensions.get("screen").width;
   const deviceHeight = Dimensions.get("screen").height;
 
-  useEffect(() => {
-    fetchRandomNewsData();
-  }, []);
-
   return (
     <FlatList
       contentContainerStyle={{

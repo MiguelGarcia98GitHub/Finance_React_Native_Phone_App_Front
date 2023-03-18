@@ -22,6 +22,9 @@ export default function DividendChart() {
     >
       <VictoryChart width={350} theme={VictoryTheme.material}>
         <VictoryBar
+          animate={{
+            duration: 500,
+          }}
           data={[
             ...selectedDividendData.map((item) => {
               const dataItem = {
@@ -34,6 +37,13 @@ export default function DividendChart() {
           ]}
           x="date"
           y="payment"
+          labels={[1, 2, 3, 4]}
+          style={{
+            data: {
+              fill: "rgba(16, 123, 169, 1)",
+              borderRadius: 100,
+            },
+          }}
         />
       </VictoryChart>
     </View>
