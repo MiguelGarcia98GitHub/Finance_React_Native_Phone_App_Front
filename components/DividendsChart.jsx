@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { Dimensions, View } from "react-native";
 
 import {
   VictoryBar,
@@ -10,6 +10,8 @@ import { useZustand } from "../store/store";
 
 export default function DividendChart() {
   const { fetchSelectedDividendData, selectedDividendData } = useZustand();
+  const deviceWidth = Dimensions.get("window").width;
+  const deviceHeight = Dimensions.get("window").height;
 
   return (
     <View
@@ -18,9 +20,10 @@ export default function DividendChart() {
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#f5fcff",
+        paddingHorizontal: deviceWidth * 0.05,
       }}
     >
-      <VictoryChart width={350} theme={VictoryTheme.material}>
+      <VictoryChart width={deviceWidth * 0.9} theme={VictoryTheme.material}>
         <VictoryBar
           animate={{
             duration: 500,
@@ -29,7 +32,7 @@ export default function DividendChart() {
             ...selectedDividendData.map((item) => {
               const dataItem = {
                 date: item.record_date.substring(0, 7),
-                payment: item.cash_amount,
+                payment: `${item.cash_amount} $ `,
               };
 
               return dataItem;
@@ -37,7 +40,6 @@ export default function DividendChart() {
           ]}
           x="date"
           y="payment"
-          labels={[1, 2, 3, 4]}
           style={{
             data: {
               fill: "rgba(16, 123, 169, 1)",

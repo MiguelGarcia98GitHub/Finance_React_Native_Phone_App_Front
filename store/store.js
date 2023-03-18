@@ -158,7 +158,7 @@ export const useZustand = create(
         });
     },
 
-    selectedDividendData: {},
+    selectedDividendData: null,
     fetchSelectedDividendData: async (stockTicker) => {
       fetch(
         `https://api.polygon.io/v3/reference/dividends?ticker=${stockTicker}&limit=4&apiKey=cpLItb5XLdMpk_pFumxU0ZsDap9ndidz`
@@ -169,7 +169,7 @@ export const useZustand = create(
           console.log(data);
           set((state) => ({
             ...state,
-            selectedDividendData: data.results,
+            selectedDividendData: data.results.reverse(),
           }));
         })
         .catch((_err) => {

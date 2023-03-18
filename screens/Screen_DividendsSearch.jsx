@@ -1,12 +1,20 @@
 import { Pressable, TextInput, View, Text } from "react-native";
 import DividendChart from "../components/DividendsChart";
 import { useZustand } from "../store/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useDebounce from "../hooks/useDebounce";
 
 export default function Screen_DividendsSearch() {
   const [searchValue, setSearchValue] = useState();
 
   const { fetchSelectedDividendData, selectedDividendData } = useZustand();
+  const debouncedInputValue = useDebounce(searchValue, 500);
+
+  useEffect(() => {
+    if (searchValue !== "") {
+      fetchSelectedDividendData(searchValue);
+    }
+  }, [debouncedInputValue]);
 
   return (
     <View
@@ -30,12 +38,13 @@ export default function Screen_DividendsSearch() {
           style={{
             backgroundColor: "green",
             height: "100%",
-            width: "75%",
+            width: "100%",
             justifyContent: "center",
             alignItems: "center",
           }}
         >
           <TextInput
+            placeholder="Search for a stock Ticker like MSFT, AAPL, etc."
             style={{
               borderColor: "grey",
               borderWidth: 1,
@@ -50,7 +59,7 @@ export default function Screen_DividendsSearch() {
             }}
           />
         </View>
-        <View
+        {/* <View
           style={{
             width: "25%",
             height: "100%",
@@ -75,15 +84,10 @@ export default function Screen_DividendsSearch() {
               Search
             </Text>
           </Pressable>
-        </View>
-        {/* <View style={{ height: 500, height: "25%", backgroundColor: "orange" }}>
-          <Pressable style={{ padding: 20, backgroundColor: "lightgreen" }}>
-            <Text></Text>
-          </Pressable>
         </View> */}
       </View>
 
-      {Object.keys(selectedDividendData).length > 0 && <DividendChart />}
+      {selectedDividendData && <DividendChart />}
     </View>
   );
 }
