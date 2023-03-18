@@ -8,7 +8,6 @@ export default function Screen_NewsStart() {
         width: "100%",
         height: "100%",
         alignItems: "center",
-        backgroundColor: "grey",
       }}
     >
       <NewsList />

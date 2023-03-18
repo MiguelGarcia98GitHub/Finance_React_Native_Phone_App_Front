@@ -20,7 +20,7 @@ export default function Screen_DividendsSearch() {
       <View
         style={{
           width: "100%",
-          height: "15%",
+          height: 100,
           backgroundColor: "lightblue",
           alignItems: "center",
           flexDirection: "row",
