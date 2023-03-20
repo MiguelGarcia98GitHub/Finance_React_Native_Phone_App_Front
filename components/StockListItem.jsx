@@ -9,24 +9,52 @@ export default function StockListItem({ item }) {
   return (
     <Pressable
       style={{
-        width: 300,
-        height: 80,
-        marginTop: 10,
-        backgroundColor: "pink",
+        backgroundColor: "rgba(16, 123, 169, 1)",
+        borderRadius: 16,
+        width: 250,
+        marginVertical: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        justifyContent: "center",
+        alignItems: "baseline",
+        borderWidth: 1,
+        borderColor: "grey",
       }}
       onPress={() => {
-        fetchSelectedStockData(item.T);
-        navigation.navigate("Stock_Details");
+        fetchSelectedStockData(item?.T).then((data) => {
+          if (data.status === "OK") {
+            navigation.navigate("Stock Detail");
+          }
+        });
       }}
     >
       <View>
-        <Text>Ticker: {item.T} </Text>
+        <Text
+          style={{
+            color: "white",
+            fontWeight: "bold",
+          }}
+        >
+          Ticker: {item?.T}
+        </Text>
       </View>
       <View>
-        <Text>Closing Price: {item.c} </Text>
+        <Text
+          style={{
+            color: "white",
+          }}
+        >
+          Closing Price: {item?.c?.toFixed(2)} $
+        </Text>
       </View>
       <View>
-        <Text>Average Price: {item.vw} </Text>
+        <Text
+          style={{
+            color: "white",
+          }}
+        >
+          Average Price: {item?.vw?.toFixed(2)} $
+        </Text>
       </View>
     </Pressable>
   );

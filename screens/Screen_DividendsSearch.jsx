@@ -1,4 +1,4 @@
-import { Pressable, TextInput, View, Text } from "react-native";
+import { TextInput, View, Text, Dimensions } from "react-native";
 import DividendChart from "../components/DividendsChart";
 import { useZustand } from "../store/store";
 import { useEffect, useState } from "react";
@@ -8,10 +8,12 @@ export default function Screen_DividendsSearch() {
   const [searchValue, setSearchValue] = useState();
 
   const { fetchSelectedDividendData, selectedDividendData } = useZustand();
+  const deviceWidth = Dimensions.get("window").width;
+  const deviceHeight = Dimensions.get("window").height;
   const debouncedInputValue = useDebounce(searchValue, 500);
 
   useEffect(() => {
-    if (searchValue !== "") {
+    if (searchValue) {
       fetchSelectedDividendData(searchValue);
     }
   }, [debouncedInputValue]);
@@ -22,69 +24,60 @@ export default function Screen_DividendsSearch() {
         width: "100%",
         height: "100%",
         alignItems: "center",
-        backgroundColor: "lightgreen",
       }}
     >
       <View
         style={{
           width: "100%",
-          height: 100,
-          backgroundColor: "lightblue",
+          height: deviceHeight * 0.1,
+          justifyContent: "center",
           alignItems: "center",
-          flexDirection: "row",
         }}
       >
-        <View
+        <TextInput
+          placeholder="Search for a stock Ticker like MSFT, AAPL, etc."
           style={{
-            backgroundColor: "green",
-            height: "100%",
-            width: "100%",
-            justifyContent: "center",
-            alignItems: "center",
+            borderRadius: 20,
+            borderColor: "grey",
+            borderWidth: 1,
+            paddingHorizontal: 12,
+            paddingVertical: 6,
+            marginHorizontal: 40,
+            width: "80%",
+            height: 30,
           }}
-        >
-          <TextInput
-            placeholder="Search for a stock Ticker like MSFT, AAPL, etc."
-            style={{
-              borderColor: "grey",
-              borderWidth: 1,
-              paddingHorizontal: 10,
-              paddingVertical: 4,
-              marginHorizontal: 40,
-              width: "80%",
-              height: 30,
-            }}
-            onChangeText={(value) => {
-              setSearchValue(value);
-            }}
-          />
-        </View>
-        {/* <View
-          style={{
-            width: "25%",
-            height: "100%",
-            backgroundColor: "orange",
-            justifyContent: "center",
-            alignItems: "center",
+          onChangeText={(value) => {
+            setSearchValue(value);
           }}
-        >
-          <Pressable
-            style={{
-              width: "80%",
-              backgroundColor: "teal",
-              borderRadius: 20,
-              paddingHorizontal: 12,
-              paddingVertical: 6,
-            }}
-            onPress={() => {
-              fetchSelectedDividendData(searchValue);
-            }}
-          >
-            <Text style={{ textAlign: "center", fontWeight: "bold" }}>
-              Search
-            </Text>
-          </Pressable>
-        </View> */}
+        />
+      </View>
+      <View
+        style={{
+          width: "100%",
+          height: deviceHeight * 0.12,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {selectedDividendData && (
+          <>
+            <View>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "bold",
+                }}
+              >
+                Ticker: {selectedDividendData[0]?.ticker}
+              </Text>
+            </View>
+            <View>
+              <Text>
+                Dividends per Year: {selectedDividendData[0]?.frequency}
+              </Text>
+            </View>
+          </>
+        )}
       </View>
 
       {selectedDividendData && <DividendChart />}

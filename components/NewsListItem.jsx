@@ -1,11 +1,7 @@
-import { useNavigation } from "@react-navigation/native";
 import { Image, Text, Pressable, View, Linking } from "react-native";
-import { useZustand } from "./../store/store";
+import { Alert } from "react-native";
 
 export default function NewsListItem({ item }) {
-  const { changeSelectedNews } = useZustand();
-  const navigation = useNavigation();
-
   return (
     <Pressable
       style={{
@@ -22,7 +18,22 @@ export default function NewsListItem({ item }) {
       }}
       to="/news_details"
       onPress={() => {
-        Linking.openURL(item.article_url);
+        Alert.alert(
+          "Open on browser",
+          "Do you want to open this news on your browser?",
+          [
+            {
+              text: "Cancel",
+              style: "cancel",
+            },
+            {
+              text: "Go to News",
+              onPress: () => {
+                Linking.openURL(item.article_url);
+              },
+            },
+          ]
+        );
       }}
     >
       <View
@@ -103,7 +114,7 @@ export default function NewsListItem({ item }) {
           {item.tickers.slice(0, 5).map((tickerName, index) => (
             <View key={Math.random()}>
               <Text
-                numberOfLines={12}
+                numberOfLines={8}
                 style={{
                   color: "white",
                   fontSize: 13,

@@ -3,7 +3,6 @@ import { useZustand } from "../store/store";
 
 export default function NewsListItemDetails() {
   const { selectedNews } = useZustand();
-  console.log(selectedNews);
 
   return (
     <ScrollView

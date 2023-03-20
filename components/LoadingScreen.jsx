@@ -10,14 +10,10 @@ export default function LoadingScreen() {
   useEffect(() => {
     async function fetchAllData() {
       const data1 = await fetchRandomNewsData();
-      console.log("data1:");
-      console.log(data1);
+
       const data2 = await fetchAllStocksData();
-      console.log("data2:");
-      console.log(data2);
 
       if (data1.status === "OK" && data2.status === "OK") {
-        console.log("data1 and data2 are OK");
         navigation.navigate("Tabs");
       }
     }

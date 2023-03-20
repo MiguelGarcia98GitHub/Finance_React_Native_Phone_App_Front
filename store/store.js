@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { fetchError } from "../errors/errorMessages";
 import { daysOfWeek } from "../helpers/daysOfWeek";
+import { POLYGON_API_KEY } from "@env";
 
 export const useZustand = create(
   devtools((set, get) => ({
@@ -27,11 +28,10 @@ export const useZustand = create(
       const randomTickerName = tickersArray[randomTickerIndex];
 
       const data = await fetch(
-        `https://api.polygon.io/v2/reference/news?ticker=${randomTickerName}&limit=20&apiKey=cpLItb5XLdMpk_pFumxU0ZsDap9ndidz`
+        `https://api.polygon.io/v2/reference/news?ticker=${randomTickerName}&limit=20&apiKey=${POLYGON_API_KEY}`
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
           set((state) => ({
             ...state,
             randomNewsData: data.results,
@@ -69,14 +69,12 @@ export const useZustand = create(
       }
 
       currentDate = currentDate.toISOString().split("T")[0];
-      console.log(currentDate);
+
       const data = await fetch(
-        `https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/${currentDate}?adjusted=true&apiKey=cpLItb5XLdMpk_pFumxU0ZsDap9ndidz`
+        `https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/${currentDate}?adjusted=true&apiKey=${POLYGON_API_KEY}`
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log("data of all stocks data:");
-
           set((state) => ({
             // We will place some relevant stock names first (order randomized), then the rest of stocks in the list (also randomized)
             ...state,
@@ -135,15 +133,13 @@ export const useZustand = create(
 
       return data;
     },
-    selectedStockData: {},
+    selectedStockData: null,
     fetchSelectedStockData: async (stockTicker) => {
-      fetch(
-        `https://api.polygon.io/v3/reference/tickers/${stockTicker}?apiKey=cpLItb5XLdMpk_pFumxU0ZsDap9ndidz`
+      const data = await fetch(
+        `https://api.polygon.io/v3/reference/tickers/${stockTicker}?apiKey=${POLYGON_API_KEY}`
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log("selectedStockData:");
-          console.log(data);
           set((state) => ({
             ...state,
             selectedStockData: data.results,
@@ -156,17 +152,16 @@ export const useZustand = create(
             selectedStockData: fetchError,
           }));
         });
+      return data;
     },
 
     selectedDividendData: null,
     fetchSelectedDividendData: async (stockTicker) => {
       fetch(
-        `https://api.polygon.io/v3/reference/dividends?ticker=${stockTicker}&limit=4&apiKey=cpLItb5XLdMpk_pFumxU0ZsDap9ndidz`
+        `https://api.polygon.io/v3/reference/dividends?ticker=${stockTicker}&limit=4&apiKey=${POLYGON_API_KEY}`
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log("selectedDividendData:");
-          console.log(data);
           set((state) => ({
             ...state,
             selectedDividendData: data.results.reverse(),
@@ -179,15 +174,13 @@ export const useZustand = create(
           }));
         });
     },
-    selectedForexData: {},
+    selectedForexData: null,
     fetchForexData: async (forex1stCurrency, forex2ndCurrency) => {
       fetch(
-        `https://api.polygon.io/v2/aggs/ticker/C:${forex1stCurrency}${forex2ndCurrency}/prev?adjusted=true&apiKey=cpLItb5XLdMpk_pFumxU0ZsDap9ndidz`
+        `https://api.polygon.io/v2/aggs/ticker/C:${forex1stCurrency}${forex2ndCurrency}/prev?adjusted=true&apiKey=${POLYGON_API_KEY}`
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log("fetched Forex Data:");
-          console.log(data);
           set((state) => ({
             ...state,
             selectedForexData: data.results[0],

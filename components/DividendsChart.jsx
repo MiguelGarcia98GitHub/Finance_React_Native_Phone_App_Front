@@ -1,25 +1,19 @@
 import { Dimensions, View } from "react-native";
-
-import {
-  VictoryBar,
-  VictoryChart,
-  VictoryLabel,
-  VictoryTheme,
-} from "victory-native";
+import { VictoryBar, VictoryChart, VictoryTheme } from "victory-native";
 import { useZustand } from "../store/store";
 
 export default function DividendChart() {
-  const { fetchSelectedDividendData, selectedDividendData } = useZustand();
+  const { selectedDividendData } = useZustand();
   const deviceWidth = Dimensions.get("window").width;
   const deviceHeight = Dimensions.get("window").height;
 
   return (
     <View
       style={{
-        height: "80%",
+        height: deviceHeight * 0.65,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#f5fcff",
+
         paddingHorizontal: deviceWidth * 0.05,
       }}
     >

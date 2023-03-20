@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import { useZustand } from "../store/store";
 
@@ -18,22 +18,19 @@ export default function Screen_ForexConverter() {
     );
   }, [forexCurrencies]);
 
-  console.log("forexCurrencies:");
-
   return (
     <View
       style={{
         width: "100%",
         height: "100%",
         alignItems: "center",
-        backgroundColor: "lightblue",
       }}
     >
       <View
         style={{
           width: "100%",
           height: "20%",
-          backgroundColor: "grey",
+
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-around",
@@ -41,10 +38,18 @@ export default function Screen_ForexConverter() {
       >
         <SelectDropdown
           defaultButtonText="EUR"
-          buttonStyle={{ width: "40%" }}
-          buttonTextStyle={{ fontSize: 13, fontWeight: "bold" }}
+          buttonStyle={{ width: "40%", backgroundColor: "#6082B6" }}
+          buttonTextStyle={{
+            fontSize: 18,
+            fontWeight: "bold",
+            color: "white",
+          }}
           data={["GBP", "EUR", "USD"]}
           onSelect={(value) => {
+            if (value === forexCurrencies.forex2ndCurrency) {
+              Alert.alert("Please select different currencies");
+              return;
+            }
             setForexCurrencies({
               ...forexCurrencies,
               forex1stCurrency: value,
@@ -53,10 +58,18 @@ export default function Screen_ForexConverter() {
         />
         <SelectDropdown
           defaultButtonText="USD"
-          buttonStyle={{ width: "40%" }}
-          buttonTextStyle={{ fontSize: 13, fontWeight: "bold" }}
+          buttonStyle={{ width: "40%", backgroundColor: "#6082B6" }}
+          buttonTextStyle={{
+            fontSize: 18,
+            fontWeight: "bold",
+            color: "white",
+          }}
           data={["GBP", "EUR", "USD"]}
           onSelect={(value) => {
+            if (value === forexCurrencies.forex1stCurrency) {
+              Alert.alert("Please select different currencies");
+              return;
+            }
             setForexCurrencies({
               ...forexCurrencies,
               forex2ndCurrency: value,
@@ -64,11 +77,22 @@ export default function Screen_ForexConverter() {
           }}
         />
       </View>
-      <View style={{ width: "100%", height: "50%", backgroundColor: "orange" }}>
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-          Currently 1 {forexCurrencies.forex1stCurrency} equals
-          {selectedForexData.c} {forexCurrencies.forex2ndCurrency}
-        </Text>
+      <View
+        style={{
+          width: "100%",
+          marginTop: "45%",
+          height: "20%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {selectedForexData?.c && (
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+            1 {forexCurrencies?.forex1stCurrency} equals{" "}
+            {selectedForexData?.c?.toFixed(2)}{" "}
+            {forexCurrencies.forex2ndCurrency}
+          </Text>
+        )}
       </View>
     </View>
   );
